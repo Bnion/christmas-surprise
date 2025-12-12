@@ -182,3 +182,95 @@ a:hover {
         opacity: 1;
     }
 }
+
+@keyframes flickerAnimation {
+
+    0%,
+    100% {
+        opacity: 0.9;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* ========================================
+   MOBILE RESPONSIVE STYLES
+   ======================================== */
+
+/* Tablets and smaller (< 1024px) */
+@media (max-width: 1024px) {
+    .timeline {
+        max-width: 90%;
+    }
+}
+
+/* Mobile devices (< 768px) */
+@media (max-width: 768px) {
+
+    /* Reduce bokeh effects on mobile */
+    body::before,
+    body::after {
+        width: 80px !important;
+        height: 80px !important;
+        opacity: 0.2;
+    }
+
+    /* Typography adjustments */
+    h1 {
+        font-size: 2.5rem !important;
+    }
+
+    h2 {
+        font-size: 2rem !important;
+    }
+
+    h3 {
+        font-size: 1.5rem !important;
+    }
+
+    /* Glass panels */
+    .glass-panel {
+        padding: 1.5rem;
+        border-radius: 10px;
+    }
+
+    /* Timeline on mobile - move to left side */
+    .timeline {
+        padding: 20px 0;
+        max-width: 100%;
+    }
+
+    .timeline::after {
+        left: 20px;
+        margin-left: 0;
+        width: 4px;
+    }
+
+    .timeline::before {
+        left: 20px;
+    }
+}
+
+/* Small phones (< 480px) */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem !important;
+    }
+
+    h2 {
+        font-size: 1.5rem !important;
+    }
+
+    .glass-panel {
+        padding: 1rem;
+    }
+
+    /* Further reduce timeline glow on very small screens */
+    .timeline::after {
+        box-shadow:
+            0 0 10px rgba(255, 215, 0, 0.6),
+            0 0 20px rgba(255, 215, 0, 0.4);
+    }
+}
