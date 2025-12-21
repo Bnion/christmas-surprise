@@ -7,7 +7,7 @@
   "linkerEnabled": true,
   "resources": {
     "assembly": {
-      "ChristmasSurprise.dll": "sha256-5zZjFpGmBgft4QtpH53tW+t3ynurqlbqXWApW\/pNUPg=",
+      "ChristmasSurprise.dll": "sha256-9u22pseV7E5y9T1EAkhQpZDwXOFn5WGeaifQ8c3UV8c=",
       "Microsoft.AspNetCore.Components.dll": "sha256-slZHkb6eiQesxX5Ng\/oKwhZa0\/h9kP\/RmeD+ZLYxPd0=",
       "Microsoft.AspNetCore.Components.Web.dll": "sha256-a1LPwmBT0r7F7jjDNaOV\/TbHfHTuSQitRLy+YyOLPkM=",
       "Microsoft.AspNetCore.Components.WebAssembly.dll": "sha256-PTSKKTHwdz5fL0+3rx9EsDSIbwi8jHHDx2mIx2Rxavo=",
