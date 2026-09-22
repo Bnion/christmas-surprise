@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drei Jahre ❤</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+    <style>
+        .password-overlay {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(1200px 600px at 50% -10%, rgba(232, 194, 137, 0.12), transparent 60%),
+                radial-gradient(circle at top, #3d2233 0%, #1a1118 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 20000;
+            padding: 1.25rem;
+        }
+
+        .password-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+        }
+
+        .login-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(232, 194, 137, 0.3);
+            border-radius: 18px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.4), 0 0 40px rgba(232, 194, 137, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .login-container h1 {
+            font-family: 'Great Vibes', cursive;
+            font-weight: 400;
+            font-size: 2.6rem;
+            color: #e8c289;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .login-container .heart {
+            font-size: 1.6rem;
+            margin-bottom: 0.75rem;
+            animation: pulse 2.8s ease-in-out infinite;
+        }
+
+        .login-container p {
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            color: rgba(243, 230, 216, 0.75);
+            line-height: 1.6;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            font-size: 1rem;
+            font-family: inherit;
+            border: 1px solid rgba(232, 194, 137, 0.5);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.06);
+            color: #f3e6d8;
+            margin-bottom: 1rem;
+            text-align: center;
+            outline: none;
+        }
+
+        .login-container input:focus {
+            border-color: #e8c289;
+            box-shadow: 0 0 15px rgba(232, 194, 137, 0.3);
+        }
+
+        .login-container input::placeholder {
+            color: rgba(243, 230, 216, 0.4);
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 0.9rem;
+            font-size: 1rem;
+            font-family: inherit;
+            background: transparent;
+            border: 1px solid #e8c289;
+            color: #e8c289;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .login-container button:hover {
+            background: #e8c289;
+            color: #1a1118;
+            box-shadow: 0 0 20px rgba(232, 194, 137, 0.4);
+        }
+
+        .login-container .error {
+            color: #e89a9a;
+            margin-top: 1rem;
+            margin-bottom: 0;
+            display: none;
+        }
+    </style>
+    <style>
+        :root {
+            --bg-top: #3d2233;
+            --bg-bottom: #1a1118;
+            --gold: #e8c289;
+            --gold-soft: rgba(232, 194, 137, 0.55);
+            --text: #f3e6d8;
+            --text-soft: rgba(243, 230, 216, 0.75);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(1200px 600px at 50% -10%, rgba(232, 194, 137, 0.12), transparent 60%),
+                radial-gradient(circle at top, var(--bg-top) 0%, var(--bg-bottom) 100%);
+            background-attachment: fixed;
+            color: var(--text);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+
+        .page {
+            max-width: 620px;
+            margin: 0 auto;
+            padding: 3rem 1.25rem 4rem;
+            text-align: center;
+        }
+
+        .ornament {
+            color: var(--gold);
+            font-size: 1.1rem;
+            letter-spacing: 0.6em;
+            margin-bottom: 0.75rem;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-weight: 400;
+            font-size: clamp(3rem, 12vw, 4.5rem);
+            color: var(--gold);
+            text-shadow: 0 0 30px rgba(232, 194, 137, 0.35);
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(1.4rem, 6vw, 1.9rem);
+            color: var(--text-soft);
+            margin-top: 0.5rem;
+        }
+
+        .photo-wrap {
+            margin: 2.5rem auto 1rem;
+            max-width: 320px;
+            padding: 10px;
+            border: 1px solid var(--gold-soft);
+            border-radius: 999px 999px 18px 18px;
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow:
+                0 0 40px rgba(232, 194, 137, 0.18),
+                0 18px 50px rgba(0, 0, 0, 0.45);
+        }
+
+        .photo-wrap img {
+            display: block;
+            width: 100%;
+            border-radius: 999px 999px 10px 10px;
+        }
+
+        .photo-caption {
+            font-size: 0.8rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold-soft);
+            margin-top: 0.9rem;
+        }
+
+        .scroll-hint {
+            margin: 2.5rem 0 0.5rem;
+            color: var(--gold-soft);
+            font-size: 0.85rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            animation: bob 2.4s ease-in-out infinite;
+        }
+
+        @keyframes bob {
+            0%, 100% { transform: translateY(0); opacity: 0.6; }
+            50% { transform: translateY(7px); opacity: 1; }
+        }
+
+        .poem { margin-top: 1.5rem; }
+
+        .stanza {
+            margin: 2.6rem auto;
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 1.1s ease, transform 1.1s ease;
+        }
+
+        .stanza.visible { opacity: 1; transform: translateY(0); }
+
+        .line {
+            font-size: clamp(1rem, 3.9vw, 1.12rem);
+            line-height: 2.05;
+            color: var(--text);
+        }
+
+        .line.a { padding-left: 0; }
+        .line.b { padding-left: 1.9rem; }
+        .line.c { padding-left: 3.8rem; }
+
+        .stanza .line {
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .stanza.visible .line { opacity: 1; transform: translateY(0); }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-soft));
+        }
+
+        .divider::after {
+            background: linear-gradient(90deg, var(--gold-soft), transparent);
+        }
+
+        .divider span { color: var(--gold); font-size: 0.9rem; }
+
+        .finale .line {
+            font-weight: 400;
+        }
+
+        .footer-heart {
+            margin-top: 3.5rem;
+            color: var(--gold);
+            font-size: 1.4rem;
+            text-shadow: 0 0 22px rgba(232, 194, 137, 0.6);
+            animation: pulse 2.8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.85; }
+            50% { transform: scale(1.12); opacity: 1; }
+        }
+
+        .particle {
+            position: fixed;
+            bottom: -30px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: rise linear forwards;
+            text-shadow: 0 0 12px rgba(232, 194, 137, 0.7);
+        }
+
+        @keyframes rise {
+            to {
+                transform: translateY(-110vh) translateX(var(--drift, 0));
+                opacity: 0;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .scroll-hint, .footer-heart { animation: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="password-overlay" id="passwordOverlay">
+        <div class="login-container">
+            <div class="heart">❤</div>
+            <h1>Drei Jahre</h1>
+            <p>Diese Seite gehört nur dir.<br>Sag mir das Wort, das nur wir kennen.</p>
+            <input type="password" id="passwordInput" placeholder="Unser Wort..." autofocus>
+            <button onclick="checkPassword()">Öffnen</button>
+            <p class="error" id="errorMsg">Das war es leider nicht, versuch es noch einmal.</p>
+        </div>
+    </div>
+
+    <div class="page">
+        <p class="ornament">♥ ♥ ♥</p>
+        <h1>Drei Jahre</h1>
+        <p class="subtitle">für Salome</p>
+
+        <div class="photo-wrap">
+            <img src="images/uns.jpg" alt="Wir drei" onerror="this.parentElement.style.display='none'">
+        </div>
+        <p class="photo-caption">unser erstes gemeinsames Jahr zu Hause</p>
+
+        <p class="scroll-hint">Scroll langsam ↓</p>
+
+        <main class="poem">
+            <section class="stanza">
+                <p class="line a">Drei Jahre hältst du nun schon selbstverständlich meine Hand,</p>
+                <p class="line b">drei Sommer, Herbst und Winter, Jahr für Jahr,</p>
+                <p class="line a">du gabst mir Halt, wo ich den Boden kaum noch fand,</p>
+                <p class="line b">und malst mein Leben bunt und wunderbar.</p>
+            </section>
+
+            <section class="stanza">
+                <p class="line a">Vier Wände wurden dieses Jahr zu einem Haus,</p>
+                <p class="line b">wir packten aus und richteten uns ein,</p>
+                <p class="line b">noch fehlt das eine oder andre, es muss nicht sein,</p>
+                <p class="line a">denn durch dich wird ein Zuhause erst daraus.</p>
+            </section>
+
+            <section class="stanza">
+                <p class="line a">Die Ausbildung war geschafft, und alles wurde neu,</p>
+                <p class="line b">dir wurde so viel Schweres anvertraut,</p>
+                <p class="line b">ich stand daneben, staunte, hab bewundernd zugeschaut,</p>
+                <p class="line a">und mitten im Getriebe bliebst du dir selber treu.</p>
+            </section>
+
+            <section class="stanza">
+                <p class="line a">Dann rief die weite Welt, du flogst nach Ecuador, so weit,</p>
+                <p class="line b">zur Familie, übers Meer. Mi amor, ich wartete hier,</p>
+                <p class="line b">du sahst Galápagos und seine Wunder, und fehltest mir,</p>
+                <p class="line a">doch warst du fort und doch ganz nah, bei mir, jederzeit.</p>
+            </section>
+
+            <section class="stanza">
+                <p class="line a">Ein halbes Jahr erst alt und schon so voller Mut,</p>
+                <p class="line a">unser Welpe Fenrir, mit ihm ist alles gut.</p>
+                <p class="line b">Er klaute uns zuerst die Herzen, dann die Schuhe,</p>
+                <p class="line c">es wurde laut und wild daheim, doch schau:</p>
+                <p class="line c">drei Herzen, ein Rudel, wir brauchen nichts dazu.</p>
+                <p class="line b">Und wir vermissen nichts, am wenigsten die Ruhe.</p>
+            </section>
+
+            <div class="divider"><span>♥</span></div>
+
+            <section class="stanza">
+                <p class="line a">Wenn ich abends dich beim Einschlafen seh,</p>
+                <p class="line b">spür ich ein tiefes, ruhiges Glück,</p>
+                <p class="line a">und nehm mir vor, für immer neben dir zu steh,</p>
+                <p class="line b">und alle meine Zweifel ziehen still zurück.</p>
+            </section>
+
+            <section class="stanza finale">
+                <p class="line a">Was kann ich dir für dieses Jahr und all die Liebe geben,</p>
+                <p class="line b">als dass ich mit dir alt werde, bis ein paar Falten</p>
+                <p class="line b">unsre Hände zieren und sie einander halten?</p>
+                <p class="line a">Außer dem Versprechen: Ich bin dein, ein ganzes Leben.</p>
+            </section>
+        </main>
+
+        <p class="footer-heart">♥</p>
+    </div>
+
+    <script>
+        const correctPassword = 'fenrir';
+
+        let unlocked = false;
+
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value.trim().toLowerCase();
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (input === correctPassword) {
+                sessionStorage.setItem('gedicht-authenticated', 'true');
+                unlock();
+            } else {
+                errorMsg.style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+                setTimeout(() => errorMsg.style.display = 'none', 3000);
+            }
+        }
+
+        function unlock() {
+            unlocked = true;
+            document.getElementById('passwordOverlay').classList.add('hidden');
+            startReveal();
+        }
+
+        if (sessionStorage.getItem('gedicht-authenticated') === 'true') {
+            document.getElementById('passwordOverlay').classList.add('hidden');
+            unlocked = true;
+        }
+
+        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') checkPassword();
+        });
+
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const stanzas = document.querySelectorAll('.stanza');
+
+        function startReveal() {
+            if (reducedMotion) {
+                stanzas.forEach(s => s.classList.add('visible'));
+            } else {
+                stanzas.forEach(stanza => {
+                    stanza.querySelectorAll('.line').forEach((line, i) => {
+                        line.style.transitionDelay = (i * 0.18) + 's';
+                    });
+                });
+
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.25 });
+
+                stanzas.forEach(s => observer.observe(s));
+            }
+        }
+
+        if (unlocked) startReveal();
+
+        const glyphs = ['✨', '❤', '🧡'];
+        let particleCount = 0;
+
+        function createParticle() {
+            if (reducedMotion || !unlocked || particleCount > 12) return;
+            particleCount++;
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.textContent = glyphs[Math.floor(Math.random() * glyphs.length)];
+            p.style.left = (5 + Math.random() * 90) + 'vw';
+            p.style.fontSize = (0.6 + Math.random() * 0.9) + 'rem';
+            p.style.setProperty('--drift', (Math.random() * 80 - 40) + 'px');
+            p.style.animationDuration = (7 + Math.random() * 5) + 's';
+            p.style.opacity = 0.35 + Math.random() * 0.45;
+            document.body.appendChild(p);
+            setTimeout(() => {
+                p.remove();
+                particleCount--;
+            }, 12000);
+        }
+
+        if (!reducedMotion) setInterval(createParticle, 900);
+    </script>
+</body>
+</html>
